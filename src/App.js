@@ -13,6 +13,8 @@ import Navigation from './Components/Navigation.js';
 import Footer from './Components/Footer.js';
 import Tienda from './Components/User/Tienda/Productos';
 import CrearProducto from './Components/User/Tienda/Crear';
+
+import UpdateProducto from './Components/User/Tienda/Update';
 // import Users from './Components/User/Users.js';
 // import User from './Components/User/User.js';
 // import Products from './Components/Products/Products.js';
@@ -87,6 +89,7 @@ useEffect(async ()=>{
     <Route exact path='/user/:id' render={ () => <User  />}   /> */}
  <Route path='/user/tienda' render={ () => <Tienda auth={auth} />} />
  <Route path='/user/crear_producto' render={ () => <CrearProducto auth={auth} />} />
+ <Route path='/user/update_producto/:id' render={ props => <UpdateProducto auth={auth} id={props.match.params.id} />} />
  </div>   
 {/* FOOTER */}
 <Footer/> 

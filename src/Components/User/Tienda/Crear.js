@@ -1,13 +1,15 @@
 import Tienda from './Tienda';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import {Input, FormGroup, FormFeedback} from 'reactstrap';
-
+import {Input, Form, FormGroup, FormFeedback} from 'reactstrap';
+import {lengthAndCharacter} from '../../Sign/verify'
 import {useHistory} from 'react-router-dom';
 
 const Crear = props => {
     
-    const [state,setState] = useState();
+    const [state,setState] = useState({
+		OFERTA:0
+	});
 	const [error, setError] = useState(false);
 	const [successful, setSuccessful] = useState(false);
 
@@ -24,6 +26,8 @@ const Crear = props => {
 
     },[successful])
     const onInputChange = (e) => {
+
+
         setState({...state,[e.target.name]: e.target.value});
       };
     
@@ -32,12 +36,16 @@ return(
      
  <div style={{    padding: '70px'}}>
  <h5>CREAR PRODUCTO</h5>
+ <Form onSubmit={()=>CrearProducto( state, props.auth.token, setSuccessful , setError)}>
  <FormGroup>
 				<Input
+					invalid={ state && state.TITLE  && !lengthAndCharacter(state.TITLE,3, 60) ? true:false}
+						
 					type="text"
 					className="form-control"
 					placeholder="Titulo"
 					name="TITLE"
+					value={state.TITLE} 
 					required
 					onChange={onInputChange}
 				/>
@@ -49,6 +57,7 @@ return(
 					className="form-control"
 					placeholder="URL imagen"
 					name="IMAGEN_URL"
+					value={state.IMAGEN_URL} 
 					required
 					onChange={onInputChange}
 				/>
@@ -60,17 +69,18 @@ return(
 					className="form-control"
 					placeholder="Descripción"
 					name="DESCRIPCION"
-					required
+					value={state.DESCRIPCION} 
 					onChange={onInputChange}
 				/>
 			</FormGroup>
 
             <FormGroup>
 				<Input
-					type="text"
+					type="number"
 					className="form-control"
 					placeholder="Valor"
 					name="VALOR"
+					value={state.VALOR} 
 					required
 					onChange={onInputChange}
 				/>
@@ -78,19 +88,20 @@ return(
 
             <FormGroup>
 				<Input
-					type="text"
+					type="number"
 					className="form-control"
 					placeholder="Oferta"
 					name="OFERTA"
+					value={state.OFERTA} 
 					required
 					onChange={onInputChange}
 				/>
 			</FormGroup>
             <Input
             type="submit"
-            onClick={() => CrearProducto( state, props.auth.token, setSuccessful , setError)}
 				value="Crear Producto"
-			/>
+			/>        </Form>
+
             {error && error ? <p>{error}</p>:null}
  </div>
 </Tienda>

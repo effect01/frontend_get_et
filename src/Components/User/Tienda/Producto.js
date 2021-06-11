@@ -3,6 +3,7 @@
 import {Input, FormGroup, FormFeedback} from 'reactstrap';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Producto  =  props=> {
@@ -78,7 +79,8 @@ const Producto  =  props=> {
                     Añadir
                 </div>
             </div>{' '}
-            <div
+            <Link
+            to={`/user/update_producto/${e.ID}`}
                 Style="
             margin: 0;
             background-color: #a7ffa9;
@@ -86,16 +88,15 @@ const Producto  =  props=> {
             border-radius: 4rem;
             padding: 20px;
             padding-top: 7px;
-            
             padding-bottom: 7px;
             pointerEvents: painted;
             cursor: pointer;
-            
             margin-left: 25px;
             transition: 0.3s ease-in-out all;"
+            
             >
                 Modificar
-            </div>
+            </Link>
             <div
                 Style="
             background-color: #e26b66;
@@ -163,7 +164,6 @@ var config = {
 		});
 };
 
-const modificarProducto = () => {};
 
 const agregarStockProducto = (data, id, setError, setSuccessful) => {
 	var config = {

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 const Tienda = props=> {
     const {index , children} = props;
 
@@ -17,21 +19,17 @@ const Tienda = props=> {
     cursor: pointer;
     background: #e4e4e4;'>
 						<NavItem>
-							<NavLink Style='color: #51725e;' isSelect={index == 1 ? 'true' : 'false'}>
-								{' '}
+                        <Link to='/user/tienda' style={{color: '#51725e',     display: 'block',   padding: '.5rem 1rem ', background: index == 1 ? 'lightgrey' : null }} >
+							{' '}
 								Productos{' '}
-							</NavLink>
+							</Link>
 						</NavItem>
 						<NavItem>
-							<NavLink Style='color: #51725e;'  isSelect={index == 2 ? 'true' : 'false'}>
+							<Link  to='/user/crear_producto' style={{color: '#51725e',     display: 'block',   padding: '.5rem 1rem ', background: index == 2 ? 'lightgrey' : null }} >
 								Crear producto
-							</NavLink>
+							</Link>
 						</NavItem>
-						<NavItem>
-							<NavLink Style='color: #51725e;'   isSelect={index == 3 ? 'true' : 'false'}>
-								Acerca de{' '}
-							</NavLink>
-						</NavItem>
+				
 					</Nav>
                 </div>
                     <div>

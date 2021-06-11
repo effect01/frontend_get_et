@@ -17,7 +17,6 @@ import {
 	Container,
 } from 'reactstrap';
 import axios from 'axios';
-import cart from '../store/reducers/cart';
 
 const Navigation = ({
 	signOut,
@@ -84,7 +83,7 @@ const Navigation = ({
 								}, 1000);
 							}}
 						>
-							<Link className="nav-link" to="/products">
+							<Link className="nav-link" to="/products" >
 								PRODUCTOS
 							</Link>
 							<svg

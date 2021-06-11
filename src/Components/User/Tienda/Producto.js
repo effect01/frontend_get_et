@@ -10,8 +10,9 @@ const Producto  =  props=> {
     const e =  producto;
     console.log(e , index)
 	const [error, setError] = useState();
-	const [stock, setStock] = useState();
+    
 	const [successful, setSuccessful] = useState();
+	const [stock, setStock] = useState();
 	const onInputChange = (e) => {
 		setStock(e.target.value);
 	};

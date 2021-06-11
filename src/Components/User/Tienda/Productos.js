@@ -19,7 +19,7 @@ const Productos = (props) => {
 	}, [urlFinal]);
 
 	useEffect(() => {
-		if (props.auth.profile != null)
+		if (props.auth.profile != null && props.auth.profile )
 			setUrlFinal(
 				'http://localhost:3001/productos/tienda/' + props.auth.profile.ID
 			);
@@ -27,7 +27,7 @@ const Productos = (props) => {
 
 	return (
 		<Tienda props={props} index={1}>
-			{state && state.status === 200
+			{state && state.status === 200 &&  state.data.length > 0
 				? state.data.map(  (e, index) => <Producto auth={props.auth}producto={e} index={index}/>
 				  )
 				: null}

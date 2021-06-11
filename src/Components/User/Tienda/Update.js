@@ -36,7 +36,7 @@ return(
      
  <div style={{    padding: '70px'}}>
  <h5>MODIFICAR PRODUCTO</h5>
- <Form onSubmit={()=>UpdateProducto( state, props.id , props.auth.token, setSuccessful , setError)}>
+ <Form onSubmit={(e)=>UpdateProducto( state, props.id , props.auth.token, setSuccessful , setError, e)}>
  <FormGroup>
 				<Input
 					invalid={ state && state.NOMBRE  && !lengthAndCharacter(state.NOMBRE,3, 60) ? true:false}
@@ -115,8 +115,16 @@ export default Update
 
 
 
-const UpdateProducto = (data, id , token, setSuccessful , setError ) =>{
-
+const UpdateProducto = (data, id , token, setSuccessful , setError,e ) =>{
+    e.preventDefault()
+    const dataJSON = JSON.stringify({
+        "TITLE": data.NOMBRE,
+        "IMAGEN_URL": data.URL_IMAGEN,
+        "DESCRIPCION": data.DESCRIPCION,
+        "VALOR": data.PRECIO_BASE,
+        "OFERTA": data.OFERTA,
+      });
+      
     var config = {
         method: 'put',
         url: `http://localhost:3001/PRODUCTOS/${id}`,
@@ -124,7 +132,7 @@ const UpdateProducto = (data, id , token, setSuccessful , setError ) =>{
           'Authorization': `Bearer ${token}`, 
           'Content-Type': 'application/json'
         },
-        data : data
+        data : dataJSON
       };
       
     
@@ -149,7 +157,7 @@ const UpdateProducto = (data, id , token, setSuccessful , setError ) =>{
             .then((res) => {
                 return res;
             })
-            .then((res) => setState({...res.data, TIENDA:id_tienda,loading: false}))
+            .then((res) => setState({...res.data, TIENDA:id_tienda, OFERTA: 0,loading: false}))
             .catch((res) =>
                 // ERROR HANDLEE REDUX MISS
                 setState({...res.response})

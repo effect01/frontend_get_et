@@ -83,7 +83,7 @@ const Navigation = ({
 								}, 1000);
 							}}
 						>
-							<Link className="nav-link" to="/products" >
+							<Link className="nav-link" to="/productos" >
 								PRODUCTOS
 							</Link>
 							<svg

@@ -51,7 +51,7 @@ function Product(props) {
 					<div id="product-interaction">
 						<div>
 							<h2>
-								{ props.fnMoneda(state.data.PRECIO_BASE * (1 - state.data.OFERTA))}
+								{ (state.data.PRECIO_BASE * (1 - state.data.OFERTA))}
 									
 							</h2>
 							<h5
@@ -65,7 +65,7 @@ function Product(props) {
 								{state.data.OFERTA > 0 ? (
 									<>
 										<strike>
-											{ props.fnMoneda( state.data.PRECIO_BASE)}
+											{ ( state.data.PRECIO_BASE)}
 										</strike>
 									</>
 								) : null}

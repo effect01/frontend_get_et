@@ -36,7 +36,7 @@ return(
      
  <div style={{    padding: '70px'}}>
  <h5>CREAR PRODUCTO</h5>
- <Form onSubmit={()=>CrearProducto( state, props.auth.token, setSuccessful , setError)}>
+ <Form onSubmit={e =>CrearProducto( state, props.auth.token, setSuccessful , setError, e)}>
  <FormGroup>
 				<Input
 					invalid={ state && state.TITLE  && !lengthAndCharacter(state.TITLE,3, 60) ? true:false}
@@ -112,8 +112,8 @@ return(
 export default Crear
 
 
-const CrearProducto = (data,token, setSuccessful , setError ) =>{
-
+const CrearProducto = (data,token, setSuccessful , setError , e) =>{
+e.preventDefault()
 var config = {
   method: 'post',
   url: 'http://localhost:3001/PRODUCTOS',

@@ -8,7 +8,7 @@ import {
 	Row,
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
-function Card2({url, product, fnMoneda}) {
+function Card2({url, product}) {
 	return (
 		<CardLink>
 			{' '}
@@ -26,7 +26,7 @@ function Card2({url, product, fnMoneda}) {
 							</CardSubtitle>
 
 							<h2>
-								{fnMoneda(product.PRECIO_BASE * (1 - product.OFERTA))}
+								{product.PRECIO_BASE * (1 - product.OFERTA)}
 							
 							
 							</h2>
@@ -34,7 +34,7 @@ function Card2({url, product, fnMoneda}) {
 								{product.PRECIO_BASE !=
 								product.PRECIO_BASE * (1 - product.OFERTA) ? (
 									<>
-										<strike>{ fnMoneda(product.PRECIO_BASE)}</strike>
+										<strike>{ (product.PRECIO_BASE)}</strike>
 										<p
 											style={{
 												textAlign: 'center',

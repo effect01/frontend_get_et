@@ -41,7 +41,6 @@ const Products = (props) => {
 				>
 					{state.data.map((product) => (
 						<Card2
-							fnMoneda={props.fnMoneda}
 							url={product.ID}
 							product={product}
 						/>

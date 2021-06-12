@@ -11,7 +11,7 @@ function Product(props) {
 
 	useEffect(() => {
 		setState({...state, loading: true});
-
+		console.log(props.cart)
 		fetchProduct(setState, id);
 	}, [id]);
 

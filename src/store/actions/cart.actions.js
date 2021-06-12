@@ -1,44 +1,40 @@
-import {object} from 'prop-types';
 
-export const addToCart = (items, product, subProductoId, nroToBuy) => {
+
+export const addToCart = (items, product, nroToBuy) => {
 	return async (dispatch, getState) => {
 		const cartItems = [];
+		console.log(nroToBuy)
 		await items.map((e) => {
 			const objects = e;
 			let productAlreadyInCart = false;
-			let count = nroToBuy || 1;
+
 			objects.product.map((cp) => {
-				// looking for the same article
-				if (cp.id === product.id && cp.subId === subProductoId) {
-					cp.count += count;
+		  // not same color / same size restricction
+		 
+				if (cp.ID === product.ID) {
+					console.log(cp,product)
+					const newCant = cp.count + nroToBuy
 					cp.count = stockVeri(
-						cp.sub_productos.filter((i) => i.id === subProductoId)[0].Stock,
-						cp.count
+						20,
+						newCant
 					);
+					console.log(cp.count, newCant)
 					productAlreadyInCart = true;
 				}
-			});
-
+				});
 			// if is new article , add new item (product) to cart
 			if (
-				!productAlreadyInCart &&
-				objects.tienda === product.tienda.NomTienda
+				!productAlreadyInCart
 			) {
-				product = {...product, count};
+				product = {...product, count:nroToBuy};
 				//   dispatch({ type: NOTIFICATION_ADD_NEW_ITEM_CART, payload: { product } });
 				objects.product.push({
-					...product,
-					count: count,
-					subId: subProductoId,
-					precio_base: product.sub_productos.filter(
-						(i) => i.id === subProductoId
-					)[0].Precio,
-				});
-			}
+					...product
+			});}
 
 			//before store(tienda) map ended add  the articles in new list
 			cartItems.push({
-				id: objects.id,
+				id: objects.id ,
 				tienda: objects.tienda,
 				product: objects.product,
 				retiro: objects.retiro,
@@ -46,19 +42,15 @@ export const addToCart = (items, product, subProductoId, nroToBuy) => {
 		});
 
 		/// if the cart is empty just create the first item
-		if (items.filter((i) => i.tienda === product.tienda.NomTienda)[0]) {
+		if (items.filter((i) => i.tienda === product.TIENDA.TITULO)[0]) {
 		} else {
 			cartItems.push({
-				id: product.tienda.id,
-				tienda: product.tienda.NomTienda,
+				id: product.TIENDA.ID_TIENDA,
+				tienda: product.TIENDA.TITULO,
 				product: [
 					{
 						...product,
 						count: nroToBuy,
-						subId: subProductoId,
-						precio_base: product.sub_productos.filter(
-							(i) => i.id === subProductoId
-						)[0].Precio,
 					},
 				],
 				retiro: 'Gratis',
@@ -83,20 +75,17 @@ export const changeDelivery = (items, tienda, newState) => {
 		dispatch(countTotal(list));
 	};
 };
-export const changeNroToBuy = (items, tienda, newState, idSubProduct) => {
+export const changeNroToBuy = (items, tienda, newState) => {
 	return async (dispatch) => {
 		const list = [];
-
 		await items.map((i) => {
-			console.log(idSubProduct, i, tienda);
 			if (i.id == tienda) {
 				i.product.map((e) => {
-					if (e.subId == idSubProduct) {
 						e.count = stockVeri(
-							e.sub_productos.filter((i) => i.id === idSubProduct)[0].Stock,
+							e.STOCK,
 							newState
 						);
-					}
+					
 				});
 			}
 			list.push({
@@ -110,19 +99,18 @@ export const changeNroToBuy = (items, tienda, newState, idSubProduct) => {
 		dispatch(countTotal(list));
 	};
 };
-export const minusNroToBuy = (items, tienda, idSubProduct) => {
+export const minusNroToBuy = (items, tienda) => {
 	return async (dispatch) => {
 		const list = [];
 		await items.map((i) => {
 			if (i.id == tienda) {
 				i.product.map((e) => {
-					if (e.subId == idSubProduct) {
 						e.count -= 1;
 						e.count = stockVeri(
-							e.sub_productos.filter((i) => i.id === idSubProduct)[0].Stock,
+							e.STOCK,
 							e.count
 						);
-					}
+					
 				});
 			}
 			list.push({
@@ -142,7 +130,7 @@ const countTotal = (cartItems) => {
 		if (cartItems.length > 0) {
 			const reducer = (accumulator, currentValue) => accumulator + currentValue;
 			const precios1 = cartItems.map((i) => {
-				const precios = i.product.map((o) => o.precio_base * o.count);
+				const precios = i.product.map((o) => o.PRECIO_BASE * o.count);
 				const sendCost = isNaN(i.retiro) ? 0 : parseInt(i.retiro);
 				return precios.reduce(reducer, sendCost);
 			});
@@ -179,16 +167,15 @@ const stockVeri = (stock, nroToBuy) => {
 		return parseInt(nroToBuy);
 	}
 };
-export const deleteAItem = (items, idSubProduct) => {
+export const deleteAItem = (items, ID) => {
 	return async (dispatch) => {
 		const list = [];
 		await items.map((i) => {
-			console.log(idSubProduct, i);
-			i.product.filter((e) => e.subId != idSubProduct);
+			i.product.filter((e) => e.ID != ID);
 
-			if (i.product.filter((e) => e.subId != idSubProduct).length === 0) {
+			if (i.product.filter((e) => e.ID != ID).length === 0) {
 			} else {
-				i.product = i.product.filter((e) => e.subId != idSubProduct);
+				i.product = i.product.filter((e) => e.ID != ID);
 				list.push({
 					id: i.id,
 					tienda: i.tienda,

@@ -83,7 +83,7 @@ const Navigation = ({
 								}, 1000);
 							}}
 						>
-							<Link className="nav-link" to="/productos" >
+							<Link className="nav-link" to="/productos">
 								PRODUCTOS
 							</Link>
 							<svg
@@ -96,7 +96,6 @@ const Navigation = ({
 								<rect width="30" height="2.5" />
 							</svg>
 						</NavItem>
-			
 
 						<NavItem>
 							<Link className="nav-link" to="/nosotros">
@@ -138,7 +137,8 @@ const Navigation = ({
 										auth,
 										changeDelivery,
 										changeNroToBuy,
-										minusNroToBuy,setCartTogle,
+										minusNroToBuy,
+										setCartTogle,
 										cartTogle
 									),
 							  ]
@@ -333,12 +333,11 @@ const cartSvg = (
 	setCartTogle,
 	cartTogle
 ) => (
-	<Dropdown  id="cart" >
+	<Dropdown id="cart">
 		<div
-		
-			onClick={e => setCartTogle(!cartTogle)}
+			onClick={(e) => setCartTogle(!cartTogle)}
 			style={{
-				cursor:'pointer',
+				cursor: 'pointer',
 				minWidth: '21px',
 				minHeight: '21px',
 				display: 'inline',
@@ -349,22 +348,17 @@ const cartSvg = (
 				color: 'blue',
 			}}
 		>
-
-			{count > 0 ?(
-		<svg height="100" width="100">
-			
-		<circle cx="12" cy="13" r="9" fill="#52ff97" />
-		<text x="12" y="14" text-anchor="middle" stroke="white" dy=".3em">
-			{count}
-		</text>
-	</svg>
-			):null}
-	
-
+			{count > 0 ? (
+				<svg height="100" width="100">
+					<circle cx="12" cy="13" r="9" fill="#52ff97" />
+					<text x="12" y="14" text-anchor="middle" stroke="white" dy=".3em">
+						{count}
+					</text>
+				</svg>
+			) : null}
 		</div>
 		<div
-	
-		onClick={e => setCartTogle(!cartTogle)}
+			onClick={(e) => setCartTogle(!cartTogle)}
 			style={{
 				display: 'block',
 				color: 'white',
@@ -372,7 +366,7 @@ const cartSvg = (
 				height: '35px',
 				padding: '5px',
 				fill: '#fff8f8',
-				cursor:'pointer',
+				cursor: 'pointer',
 				paddingTop: '3px',
 			}}
 		>
@@ -406,12 +400,11 @@ const cartSvg = (
 			</svg>
 		</div>
 
-		<div  className={cartTogle ? 'active':''}>
+		<div className={cartTogle ? 'active' : ''}>
 			<span style={{fontSize: '13px', color: 'grey'}}>Mi Carrito </span>
 			<DropdownItem divider />
 
-			<div style={ {maxHeight: '500px',
-    overflowY:'auto'}}>
+			<div style={{maxHeight: '500px', overflowY: 'auto'}}>
 				{cart && cart.length > 0 ? (
 					cart.map((i) =>
 						Items(
@@ -439,32 +432,31 @@ const cartSvg = (
 			</div>
 			<DropdownItem divider />
 
-
 			{total > 0 ? (
-			<div style={{display: 'flex', alignItems:'center'  , justifyContent: 'space-between'}}>
-			<div   >
-				<strike>
-					{' '}
-					<span style={{color: 'gray'}}> </span>{' '}
-				</strike>
-				<h5>
-					$
-					{total
-						.toFixed(0)
-						.replace(/\D/g, '')
-						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
-				</h5>
-			</div>
-			<h5 className='pay-button'>PAGAR</h5>
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+					}}
+				>
+					<div>
+						<strike>
+							{' '}
+							<span style={{color: 'gray'}}> </span>{' '}
+						</strike>
+						<h5>
+							$
+							{total
+								.toFixed(0)
+								.replace(/\D/g, '')
+								.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
+						</h5>
+					</div>
+					<h5 className="pay-button">PAGAR</h5>
+				</div>
+			) : null}
 		</div>
-
-			):null}
-
-
-
-		</div>
-
-							
 	</Dropdown>
 );
 
@@ -479,7 +471,7 @@ const Items = (
 ) => {
 	return (
 		<>
-			<span style={{fontSize: '13px', color: '#52ff97'}}>{cart.tienda}</span>
+			<span style={{fontSize: '13px', color: 'rgb(56 115 80)'}}>{cart.tienda}</span>
 
 			{cart.product.map((product) => (
 				<div
@@ -498,14 +490,9 @@ const Items = (
 						}}
 					>
 						<div style={{width: '40px', height: '40px', background: 'orange'}}>
-			
-							
-							<img
+						<img
 								style={{width: '40px', height: '40px'}}
-								src={
-									'http://localhost:1337' +
-									product.sub_productos.filter((i) => i.id === product.subId)[0]
-										.Imagen_SubProducto[0].url
+								src={product.URL_IMAGEN
 								}
 								alt=""
 							/>
@@ -513,24 +500,20 @@ const Items = (
 								
 								className="circle-botton-x"
 								onClick={(_) =>
-									deleteAItem(cartOriginal, product.subId)
+									deleteAItem(cartOriginal, product.ID)
 								}
 							>
-								
-								<span style={{fontVariant: 'unicase'}}>
+						<span style={{fontVariant: 'unicase'}}>
 								x {' '}
 									</span>
 							</button>
 						</div>
 						<div>
-
 							<div>
-
-								<Link to={'/product/'+ product.id}>
-					
-								{product.NomProducto.substr(0, 16) + '..'}
+								<Link to={'/producto/' + product.ID}>
+									{product.NOMBRE.substr(0, 16) + '..'}
 								</Link>
-								</div>
+							</div>
 
 							<div>
 								<button
@@ -555,9 +538,7 @@ const Items = (
 								/>
 								<button
 									className="circle-botton"
-									onClick={(_) =>
-										addToCart(cartOriginal, product, product.subId, 1)
-									}
+									onClick={(_) => addToCart(cartOriginal, product, 1)}
 								>
 									<i>+</i>
 								</button>
@@ -566,7 +547,7 @@ const Items = (
 					</div>
 					<span style={{overflow: 'hidden'}}>
 						$
-						{(product.precio_base * product.count)
+						{(product.PRECIO_BASE * product.count)
 							.toFixed(0)
 							.replace(/\D/g, '')
 							.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}

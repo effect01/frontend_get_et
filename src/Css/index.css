@@ -430,7 +430,7 @@ a:hover {
 
 .pay-button{
   margin-top: auto;
-  background-color: #52ff97;
+  background-color: #35ee7f;
   padding: 5px;
   border-radius: 5%;
   cursor: pointer;
@@ -442,5 +442,5 @@ a:hover {
 }
 .pay-button:hover{
   background-color:#FDCB6E;
-  box-shadow: 2px 3px 0px #52ff97;
+  box-shadow: 2px 3px 0px #35ee7f;
 }

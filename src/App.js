@@ -57,15 +57,23 @@ const {signIn, cart,loadCartCache ,deleteAItem,minusNroToBuy,changeNroToBuy, cha
 // SETTING CACHE ? 
 
 useEffect(async ()=>{
+
   if(auth.token === null || auth.token === undefined){
     if( localStorage.getItem('auth') ){
     
       const auth = await JSON.parse(localStorage.getItem('auth') ) ;
       fetchAuth(auth.profile.CORREO, auth.token);
-      const cacheItems = await JSON.parse(localStorage.getItem('cart-items') ) ;
-      const cacheCount = await  parseInt( localStorage.getItem('cart-count'));
-      const cacheTotal = await   parseInt(  localStorage.getItem('cart-total'));
+      if(localStorage.getItem('cart-items')){
+        const cacheItems = await JSON.parse(localStorage.getItem('cart-items') ) ;
+        const cacheCount = await  parseInt( localStorage.getItem('cart-count'));
+        const cacheTotal = await   parseInt(  localStorage.getItem('cart-total'));
+       
+        console.log(cart)
+        
       loadCartCache(cacheItems, cacheCount, cacheTotal);
+      }
+
+
 
       axios.defaults.headers.common =  {'Authorization': `Bearer ${auth.token}`}
 

@@ -8,7 +8,8 @@ import {useHistory} from 'react-router-dom';
 const Crear = props => {
     
     const [state,setState] = useState({
-		OFERTA:0
+		OFERTA:0,
+		DESCRIPCION: null
 	});
 	const [error, setError] = useState(false);
 	const [successful, setSuccessful] = useState(false);
@@ -69,7 +70,7 @@ return(
 					className="form-control"
 					placeholder="Descripción"
 					name="DESCRIPCION"
-					value={state.DESCRIPCION} 
+					value={state.DESCRIPCION ?? ''} 
 					onChange={onInputChange}
 				/>
 			</FormGroup>

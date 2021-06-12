@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteFavoriteProduct: (iduser, idproduct)  => dispatch(deleteFavoriteProduct(iduser, idproduct)),
     deleteFavoriteStore: (iduser, idproduct)  => dispatch(deleteFavoriteStore(iduser, idproduct)),
     addStoreToFavorite: (iduser, idproduct)  => dispatch(addStoreToFavorite(iduser, idproduct)),
-    addToCart: (items, product , subProductoId , nroToBuy)  => dispatch(addToCart(items, product, subProductoId, nroToBuy)),
+    addToCart: (items, product  , nroToBuy)  => dispatch(addToCart(items, product, nroToBuy)),
     changeDelivery:(items, product , newState ) => dispatch(changeDelivery(items, product, newState)),
     changeNroToBuy: (items, product , newState, idSubProduct ) => dispatch(changeNroToBuy(items, product, newState, idSubProduct)),
     minusNroToBuy : (items, product , idSubProduct ) => dispatch(minusNroToBuy(items, product, idSubProduct)),

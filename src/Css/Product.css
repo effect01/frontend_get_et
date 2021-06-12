@@ -353,15 +353,15 @@ justify-content: center; */
 
 
 .add-item-to-card{
-  background: #52ff97 ;
+  background: #46b573 ;
   border-radius: 10px;
   margin: 6px;
   cursor: pointer;
-  transition: .3s ease-in;
+  transition: .2s ease-in;
 }
 
 .add-item-to-card:hover{
-  background: #ac0707 ;
+  background: #0aca6a ;
 
 }
 .add-item-to-card > h6 {

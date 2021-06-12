@@ -7,11 +7,8 @@ import {Link} from 'react-router-dom';
 function Product(props) {
 	const {id} = useParams();
 	const [state, setState] = useState({loading: true});
-	const [subProductoId, setSubProduct] = useState(1);
 	const [nroBuy, setNroBuy] = useState(1);
-	useEffect(() => {
-		fetchProduct(setSubProduct, setState, id, props);
-	}, []);
+
 	useEffect(() => {
 		setState({...state, loading: true});
 
@@ -41,17 +38,28 @@ function Product(props) {
 						<div>
 							<h2>{state.data.NOMBRE}</h2>
 						</div>
-						<div style={{display: 'block'}}>
-							Marca:<h2>{state.data.MARCA}</h2>{' '}
-						</div>
-						<div style={{display: 'block'}}>
-							Modelo:<h4>{state.data.MODELO}</h4>{' '}
-						</div>
+			
+
+
+						 <a>
+
+							<h6>Vendido por:</h6>
+								<div style={{display: 'flex'}}>
+									<img src={state.data.TIENDA.URL_IMAGEN} alt="" />
+									<div>
+									<h4>{state.data.TIENDA.TITULO}</h4>
+									{' '} <span>{state.data.TIENDA.DIRECCION} </span>
+									</div>
+								
+								</div>{' '}
+						
+						</a> *
+
 					</div>
 					<div id="product-interaction">
 						<div>
 							<h2>
-								{ (state.data.PRECIO_BASE * (1 - state.data.OFERTA))}
+							CLP ${ (state.data.PRECIO_BASE * (1 - state.data.OFERTA))}
 									
 							</h2>
 							<h5
@@ -65,7 +73,7 @@ function Product(props) {
 								{state.data.OFERTA > 0 ? (
 									<>
 										<strike>
-											{ ( state.data.PRECIO_BASE)}
+											CLP $ { ( state.data.PRECIO_BASE)}
 										</strike>
 									</>
 								) : null}

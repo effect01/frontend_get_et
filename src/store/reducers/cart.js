@@ -31,6 +31,12 @@ export default function (state = initState, action) {
             return { ...state, items: action.items };
         case 'CACHE_CART_LOAD_SUCCESS':
             return { ...state, items: action.items , count: action.count , total: action.total, };
+        case 'INIT_STATE_CART':
+            localStorage.setItem('cart-count', 0);
+            localStorage.setItem('cart-total', 0);
+            localStorage.setItem('cart-items', []);
+            return initState;
+        
         default:
           return state;
       }

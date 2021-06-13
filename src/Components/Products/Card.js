@@ -26,14 +26,14 @@ function Card2({url, product}) {
 							</CardSubtitle>
 
 							<h2>
-								{product.PRECIO_BASE * (1 - product.OFERTA)}
+							CLP ${product.PRECIO_BASE * (1 - product.OFERTA)}
 							
 							
 							</h2>
 							<div>
-								{product.PRECIO_BASE !=
+							{product.PRECIO_BASE !=
 								product.PRECIO_BASE * (1 - product.OFERTA) ? (
-									<>
+									<>CLP $
 										<strike>{ (product.PRECIO_BASE)}</strike>
 										<p
 											style={{

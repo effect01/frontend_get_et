@@ -1,40 +1,35 @@
-
-
 export const addToCart = (items, product, nroToBuy) => {
 	return async (dispatch, getState) => {
 		const cartItems = [];
-		console.log(nroToBuy)
+		console.log(nroToBuy);
 		await items.map((e) => {
 			const objects = e;
 			let productAlreadyInCart = false;
 
 			objects.product.map((cp) => {
-		  // not same color / same size restricction
-		 
+				// not same color / same size restricction
+
 				if (cp.ID === product.ID) {
-					console.log(cp,product)
-					const newCant = cp.count + nroToBuy
-					cp.count = stockVeri(
-						20,
-						newCant
-					);
-					console.log(cp.count, newCant)
+					console.log(cp, product);
+					const newCant = cp.count + nroToBuy;
+					cp.count = stockVeri(20, newCant);
+					console.log(cp.count, newCant);
 					productAlreadyInCart = true;
 				}
-				});
+			});
 			// if is new article , add new item (product) to cart
-			if (
-				!productAlreadyInCart
-			) {
-				product = {...product, count:nroToBuy};
+			if (!productAlreadyInCart &&
+				objects.id === product.TIENDA.ID_TIENDA) {
+				product = {...product, count: nroToBuy};
 				//   dispatch({ type: NOTIFICATION_ADD_NEW_ITEM_CART, payload: { product } });
 				objects.product.push({
-					...product
-			});}
+					...product,
+				});
+			}
 
 			//before store(tienda) map ended add  the articles in new list
 			cartItems.push({
-				id: objects.id ,
+				id: objects.id,
 				tienda: objects.tienda,
 				product: objects.product,
 				retiro: objects.retiro,
@@ -42,7 +37,7 @@ export const addToCart = (items, product, nroToBuy) => {
 		});
 
 		/// if the cart is empty just create the first item
-		if (items.filter((i) => i.tienda === product.TIENDA.TITULO)[0]) {
+		if (items.filter((i) => i.id === product.TIENDA.ID_TIENDA)[0]) {
 		} else {
 			cartItems.push({
 				id: product.TIENDA.ID_TIENDA,
@@ -59,7 +54,6 @@ export const addToCart = (items, product, nroToBuy) => {
 
 		dispatch({type: 'ADD_TO_CART', items: cartItems});
 		dispatch(countTotal(cartItems));
-	
 	};
 };
 export const changeDelivery = (items, tienda, newState) => {
@@ -81,11 +75,7 @@ export const changeNroToBuy = (items, tienda, newState) => {
 		await items.map((i) => {
 			if (i.id == tienda) {
 				i.product.map((e) => {
-						e.count = stockVeri(
-							e.STOCK,
-							newState
-						);
-					
+					e.count = stockVeri(e.STOCK, newState);
 				});
 			}
 			list.push({
@@ -105,12 +95,8 @@ export const minusNroToBuy = (items, tienda) => {
 		await items.map((i) => {
 			if (i.id == tienda) {
 				i.product.map((e) => {
-						e.count -= 1;
-						e.count = stockVeri(
-							e.STOCK,
-							e.count
-						);
-					
+					e.count -= 1;
+					e.count = stockVeri(e.STOCK, e.count);
 				});
 			}
 			list.push({
@@ -191,5 +177,3 @@ export const deleteAItem = (items, ID) => {
 		dispatch(countTotal(list));
 	};
 };
-
-

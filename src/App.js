@@ -13,7 +13,7 @@ import Navigation from './Components/Navigation.js';
 import Footer from './Components/Footer.js';
 import Tienda from './Components/User/Tienda/Productos';
 import CrearProducto from './Components/User/Tienda/Crear';
-
+import Pago from './Components/Pago';
 import UpdateProducto from './Components/User/Tienda/Update';
 // import Users from './Components/User/Users.js';
 // import User from './Components/User/User.js';
@@ -53,7 +53,7 @@ import {
 function App(props) {
 
 // INIZIALATION
-const {signIn, cart,loadCartCache ,deleteAItem,minusNroToBuy,changeNroToBuy, changeDelivery, signUp,addStoreToFavorite,addToCart,  signOut , auth ,deleteFavoriteStore ,fetchAuth, deleteFavoriteProduct , addProductToFavorite } = props;
+const {signIn, cart,initStateCart,loadCartCache ,deleteAItem,minusNroToBuy,changeNroToBuy, changeDelivery, signUp,addStoreToFavorite,addToCart,  signOut , auth ,deleteFavoriteStore ,fetchAuth, deleteFavoriteProduct , addProductToFavorite } = props;
 // SETTING CACHE ? 
 
 useEffect(async ()=>{
@@ -93,6 +93,8 @@ useEffect(async ()=>{
     <Route exact path='/' render={ () => <Redirect to={{  pathname: "/home"}}/>}    /> 
     {/* <Route exact path='/home' render={ () => <Home  />}   /> */}
     <Route path='/sign' render={ () => <Sign signIn={signIn} signUp={signUp} auth={auth} Redirect={Redirect}/>} />
+    <Route path='/pago' exact render={ () => <Pago initStateCart={initStateCart} auth={auth} cart={cart} />} />
+
     {/* <Route exact path='/users' render={ () => <Users  />}   />
     <Route exact path='/user/:id' render={ () => <User  />}   /> */}
  <Route path='/user/tienda' render={ () => <Tienda auth={auth} />} />
@@ -119,6 +121,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     signUp: (newUser) => dispatch(signUp(newUser)),
     signOut: _ => dispatch(signOut()),
     signUpPopup: id => dispatch(signUpPopup(id)),
+    initStateCart: _ => dispatch({type:'INIT_STATE_CART'}),
     fetchAuth: (id, token) => dispatch(fetchAuth(id,token)),
     addProductToFavorite: (iduser, idproduct)  => dispatch(addToFavorite(iduser, idproduct)),
     deleteFavoriteProduct: (iduser, idproduct)  => dispatch(deleteFavoriteProduct(iduser, idproduct)),

@@ -16,13 +16,12 @@ const fetchProduct = (setState, id) => {
 };
 
 const Boleta = (props) => {
-	const pedido = props.location.state.pedido ;
+	const pedido = props.location.state.pedido;
 	const [state, setState] = useState({loading: true});
-	console.log('boleta')
+	console.log('boleta');
 	useEffect(() => {
-		console.log(props.location.state.pedido , props.location   );
+		console.log(props.location.state.pedido, props.location);
 
-		
 		fetchProduct(setState, pedido);
 	}, [pedido]);
 
@@ -58,15 +57,10 @@ const Boleta = (props) => {
 						<span>PEDIDO #{state.data.ID_PEDIDO}</span>
 						<span>{new Date(state.data.FECHA).toLocaleString()}</span>
 					</div>
-					<span>
-						ESTADO:{' '}
-						{state.data.ESTADO }{' '}
-					</span>
+					<span>ESTADO: {state.data.ESTADO} </span>
 				</div>
-				<div Style="min-height:300px">		
-					<div>
-						{state.data.PRODUCTOS.map((e) => Item(e))}
-					</div>
+				<div Style="min-height:300px">
+					<div>{state.data.PRODUCTOS.map((e) => Item(e))}</div>
 				</div>
 				<div>
 					<div
@@ -88,112 +82,67 @@ const Boleta = (props) => {
 						<span> TOTAL A PAGAR </span>{' '}
 						<span>
 							{' '}
-							USD {' '}
-							{ (state.data.PAGO.toFixed(0).replace(/\D/g, '')
-								.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')) }
-
+							USD{' '}
+							{new Intl.NumberFormat('CLP', {
+								style: 'currency',
+								currency: 'CLP',
+							}).format(state.data.PAGO)}
 						</span>{' '}
-
-					
 					</div>
-					{state.data.PAGADO > 0 ?(<div
-						Style="    display: flex;
-    justify-content: space-between;
-    font-size: 25px;
-    margin-bottom: 15px;
-    background: #eaeaea;"
-					>
-						<span> PAGADO </span>{' '}
-						<span>
-							{' '}
-							USD ${' '}
-							{new Intl.NumberFormat('us-US').format(
-								state.data.PAGADO.toString().substr(
-									0,
-									state.data.PAGADO.toString().length - 2
-								)
-							) +
-								`.` +
-								state.data.PAGADO.toString().substr(
-									state.data.PAGADO.toString().length - 2,
-									state.data.PAGADO.toString().length
-								)}{' '}
-						</span>{' '}
-					</div>):null}
-
-
-
-					</div>
-				<div Style="    display: block;
+				</div>
+				<div
+					Style="    display: block;
 								margin-bottom: 15px;
 								background: #eaeaea;
 								text-align: center;
 								min-height: 200px;
 								padding: 30px;
-								"	>
-						<span style={{ 
-								fontSize: '25px' }} >TIPO DE PAGO</span><br />
+								"
+				>
+					<span
+						style={{
+							fontSize: '25px',
+						}}
+					>
+						TIENDA
+					</span>
+					<br />
+					<h4>
+						{state.data.TIENDA.TITULO}
+					</h4>
+					<span
+						style={{
+							fontSize: '25px',
+						}}
+					>
+						INFORMACION DEL CLIENTE
+					</span>
 
-						<span style={{ marginTop: '2px', fontSize:'15px'}}> {state.data.METODO_DE_PAGO} </span><br />
-
-						{ state.data.METODO_DE_PAGO === 'TRANSFERENCIA'? (
+					<div style={{display: 'block', marginTop: '2px', fontSize: '15px'}}>
 					
-						<div style={{color:'grey'}}>
-
 						
-							<span>
-							Debe llegar al final del proceso de compras, apretando PAGAR en en el carrito y nuevamente PAGAR en la otra. En ese momento le dará el número de pedido de su orden (pre-boleta). Luego tendrá que depositar a la siguiente cuenta y comentar con el nro de pedido (tambien puede mandar un correo con el nro de pedido y boleta de pago): 
-							</span>
-							<br />
-							<strong><span>BANCO:</span></strong>
-							<br />
-							<span>BANCO XX </span> 
-							<br />
-							<strong><span>CUENTA:</span></strong>
-							<br />
-							<span>XXX XXX XXX XXX </span> <br />
-							<strong><span>TIPO DE CUENTA:</span></strong>
-							<br />
-							<span>TIPO XXX </span> <br /></div>
-			
-						):null}
-
-					<span style={{ 
-								fontSize: '25px' }} >INFORMACION DE {state.data.TIPO_DESPACHO}</span>
-					
-					<div style={{display: 'block', marginTop: '2px', fontSize:'15px'}}>
-				
-					{	
-					state.data.TIPO_DESPACHO === 'DESPACHO'?(<>
-					<strong>
-							<span>DIRECCION: </span>
+								<strong>
+									<span>DIRECCION: </span>
+								</strong>
+								<br />
+								<span>{state.data.DIRECCION} </span> <br />
+								<strong>
+									<span>COMUNA:</span>
+								</strong>
+								<br />
+								<span>{state.data.COMUNA_1} </span> <br />
+						
+						<strong>
+							<span>RUT DEL RECEPTOR:</span>
 						</strong>
-						
-						 <br />
-						<span>{state.data.DIRECCION} </span> <br />
-						<strong><span>COMUNA:</span></strong>
-						<br />
-						<span>{state.data.COMUNA_1} </span> <br />
-						</>
-						):(<>
-							<strong><span>SEDE DE RETIRO:</span></strong>
-							<br />
-							<span>{state.data.SEDE} </span> <br />		</>
-						)
-}
-
-
-					
-						<strong><span>RUT DEL RECEPTOR:</span></strong>
 						<br />
 						<span>{state.data.RUT_RECEPTOR} </span> <br />
-						<strong><span>TELEFONO:</span></strong>
+						<strong>
+							<span>TELEFONO:</span>
+						</strong>
 						<br />
 						<span>{state.data.TELEFONO} </span> <br />
-
-						</div>
-					
-
+					</div>
 				</div>
 				<div
 					Style="    display: block;
@@ -202,7 +151,7 @@ const Boleta = (props) => {
 
     "
 				>
-					<span>Gracias por tu compra en Music Pro :)</span>
+					<span>Gracias por tu compra en  Verduderias Chile :)</span>
 				</div>
 			</div>
 		</div>
@@ -251,9 +200,10 @@ const Item = (product) => (
 					<div>
 						<p style={{fontSize: '15px'}}>
 							{product.COUNT} x{' '}
-							{product.PRECIO_BASE.toFixed(0)
-								.replace(/\D/g, '')
-								.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')} {' '}
+							{new Intl.NumberFormat('CLP', {
+								style: 'currency',
+								currency: 'CLP',
+							}).format(product.PRECIO_BASE)}{' '}
 							{product.OFERTA > 0 ? (
 								<span>- {product.OFERTA * 100}%</span>
 							) : null}
@@ -263,10 +213,10 @@ const Item = (product) => (
 			</div>
 			<span style={{fontSize: '20px', overflow: 'hidden'}}>
 				${' '}
-				{(product.PRECIO_BASE * (1 - product.OFERTA) * product.COUNT)
-					.toFixed(0)
-					.replace(/\D/g, '')
-					.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
+				{new Intl.NumberFormat('CLP', {
+					style: 'currency',
+					currency: 'CLP',
+				}).format(product.PRECIO_BASE * (1 - product.OFERTA) * product.COUNT)}
 			</span>
 		</div>
 

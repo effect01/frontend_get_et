@@ -538,3 +538,45 @@ font-size: 14px;
   margin: auto;
   height: 500px;
 }
+
+#container-store-products{
+  display: grid;
+  grid-auto-rows: 320px;
+  grid-template-columns: 250px 250px 250px 250px;
+  justify-content: center;
+  margin: auto;
+  height: 500px;
+}
+
+
+#pago{
+  height: 800px;
+  width: 1700px;
+  justify-content: center;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  box-shadow: 0 0 3px black;
+}
+#pago > :nth-child(1){
+  width: 800px;
+    padding: 50px;
+    min-height: 500px;
+}
+
+#pago > :nth-child(1) input, #pago > :nth-child(1) select{
+  width: 600px;
+}
+
+#pago > :nth-child(2){
+  width: 700px;
+  padding: 50px;
+  justify-content: center;
+  align-items: center;
+}
+#pago  >  :nth-child(2) > :nth-child(2){
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

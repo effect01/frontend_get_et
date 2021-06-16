@@ -453,7 +453,13 @@ const cartSvg = (
 								.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
 						</h5>
 					</div>
-					<h5 className="pay-button">PAGAR</h5>
+					<Link
+						onClick={() => setCartTogle(!cartTogle)}
+						className="nav-link"
+						to="/pago"
+					>
+						<h5 className="pay-button">PAGAR</h5>
+					</Link>
 				</div>
 			) : null}
 		</div>
@@ -471,7 +477,9 @@ const Items = (
 ) => {
 	return (
 		<>
-			<span style={{fontSize: '13px', color: 'rgb(56 115 80)'}}>{cart.tienda}</span>
+			<span style={{fontSize: '13px', color: 'rgb(56 115 80)'}}>
+				{cart.tienda}
+			</span>
 
 			{cart.product.map((product) => (
 				<div
@@ -490,22 +498,16 @@ const Items = (
 						}}
 					>
 						<div style={{width: '40px', height: '40px', background: 'orange'}}>
-						<img
+							<img
 								style={{width: '40px', height: '40px'}}
-								src={product.URL_IMAGEN
-								}
+								src={product.URL_IMAGEN}
 								alt=""
 							/>
-										<button
-								
+							<button
 								className="circle-botton-x"
-								onClick={(_) =>
-									deleteAItem(cartOriginal, product.ID)
-								}
+								onClick={(_) => deleteAItem(cartOriginal, product.ID)}
 							>
-						<span style={{fontVariant: 'unicase'}}>
-								x {' '}
-									</span>
+								<span style={{fontVariant: 'unicase'}}>x </span>
 							</button>
 						</div>
 						<div>
@@ -545,13 +547,28 @@ const Items = (
 							</div>
 						</div>
 					</div>
-					<span style={{overflow: 'hidden'}}>
-						$
-						{(product.PRECIO_BASE * product.count)
-							.toFixed(0)
-							.replace(/\D/g, '')
-							.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
-					</span>
+
+					<div style={{display: 'block'}}>
+						<span style={{overflow: 'hidden'}}>
+							$
+							{(product.PRECIO_BASE * (1 - product.OFERTA ?? 0) * product.count)
+								.toFixed(0)
+								.replace(/\D/g, '')
+								.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
+						</span>{' '}
+						<br />
+						{product.OFERTA > 0 ? (
+							<strike>
+								<span style={{overflow: 'hidden'}}>
+									$
+									{(product.PRECIO_BASE * product.count)
+										.toFixed(0)
+										.replace(/\D/g, '')
+										.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, '.')}
+								</span>
+							</strike>
+						) : null}
+					</div>
 				</div>
 			))}
 

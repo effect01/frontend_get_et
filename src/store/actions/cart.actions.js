@@ -18,8 +18,7 @@ export const addToCart = (items, product, nroToBuy) => {
 				}
 			});
 			// if is new article , add new item (product) to cart
-			if (!productAlreadyInCart &&
-				objects.id === product.TIENDA.ID_TIENDA) {
+			if (!productAlreadyInCart && objects.id === product.TIENDA.ID_TIENDA) {
 				product = {...product, count: nroToBuy};
 				//   dispatch({ type: NOTIFICATION_ADD_NEW_ITEM_CART, payload: { product } });
 				objects.product.push({
@@ -58,6 +57,8 @@ export const addToCart = (items, product, nroToBuy) => {
 };
 export const changeDelivery = (items, tienda, newState) => {
 	return async (dispatch) => {
+		
+		console.log(items)
 		const list = [];
 		await items.map((i) => {
 			if (i.id == tienda) {
@@ -116,7 +117,7 @@ const countTotal = (cartItems) => {
 		if (cartItems.length > 0) {
 			const reducer = (accumulator, currentValue) => accumulator + currentValue;
 			const precios1 = cartItems.map((i) => {
-				const precios = i.product.map((o) => o.PRECIO_BASE * o.count);
+				const precios = i.product.map((o) => o.PRECIO_BASE * (1 -  (o.OFERTA ?? 0) ) * o.count );
 				const sendCost = isNaN(i.retiro) ? 0 : parseInt(i.retiro);
 				return precios.reduce(reducer, sendCost);
 			});

@@ -21,18 +21,11 @@ const Index = (props) => {
         console.log('hola')
 		if (props.auth.profile && props.auth.profile.ROL_ID === 2){
 			setUrlFinal(
-				`http://localhost:3001/pedido/bycorreo/${props.auth.profile.CORREO}`
+				`http://localhost:3001/pedido/${props.auth.profile.CORREO}`
 			)}else if(props.auth.profile && props.auth.profile.ROL_ID === 3){
 
                 setUrlFinal(`http://localhost:3001/pedido/byvendedor/`)
-            }else if(props.auth.profile && props.auth.profile.ROL_ID === 5){
-
-                setUrlFinal(`http://localhost:3001/pedido/bodeguero/${props.auth.profile.ID}`)
-            }else if(props.auth.profile && props.auth.profile.ROL_ID === 4){
-
-                setUrlFinal(`http://localhost:3001/pedido/contador`)
             }
-
 console.log(props.auth)
 	}, [props]);
 	/// RENDER
@@ -41,6 +34,7 @@ console.log(props.auth)
 	): error ? (
 		<p> Error </p>
 	) : state.status && state.status === 200 ? (
+	<div Style="min-height: 600px;"  >
 		<div
 			Style="    width: 1200px;
             padding: 50px;
@@ -48,13 +42,13 @@ console.log(props.auth)
             margin: auto;
             margin-top: 50px;"
 		>
-			<div id="">
+			<div  id="">
 				{typeof state.data === 'object' ? state.data.map((pedido) => (
-					<Pedidos pedido={pedido} bodegueros={bodegueros.data}  auth={props.auth}></Pedidos>
+					<Pedidos pedido={pedido} auth={props.auth}></Pedidos>
 				)): <p>
                     aun no tienes pedidos aun</p>}
 			</div>
-		</div>
+		</div>	</div>
 	) : (
 		<p>error ${state.status} </p>
 	);
@@ -64,21 +58,12 @@ export default Index;
 
 const fetchProducts = (urlFinal, setState, setBodega, setError) => {
 	const url = axios.get(urlFinal)
-    const bodegueros = axios.get('http://localhost:3001/bodega/')
-        axios
-        .all([url, bodegueros])
-		.then(
-			axios.spread(async (...responses) => {
-            const resp = await responses[0]
-            const bodega = await responses[1]
-            console.log(bodega,resp)
+		.then(async (resp) => {
 			await setState({...resp, loading: false});
-            await setBodega(bodega)
             
             setError(false)
 			console.log(resp.data, resp);
 		})
-        )
 		.catch( async (errors) => {
 			// react on errors.
             setState({loading: true});

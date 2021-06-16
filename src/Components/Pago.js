@@ -26,7 +26,7 @@ const Pago = (props) => {
 	const [haveDescuento, setHaveDescuento] = useState(false);
 	const [rediCount, setReCount] = useState(6);
 	const [req, setReq] = useState({
-		Usuario: 'javier@gmail.com',
+		Usuario: 'javierdalencon@gmail.com',
 		Descuento: 0,
 		pedidoIngresado: false,
 		MetodoPago: 'VISA',
@@ -380,6 +380,12 @@ const Items = (cart, changeDelivery, cartOriginal) => {
 								<Link to={'/producto/' + product.ID}>
 									{product.NOMBRE.substr(0, 16) + '..'}
 								</Link>
+							</div>
+						</div>
+						<div>
+							<div>
+							<strong>	X {product.count}  </strong>
+							
 							</div>
 						</div>
 					</div>

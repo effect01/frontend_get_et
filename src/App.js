@@ -15,6 +15,8 @@ import Tienda from './Components/User/Tienda/Productos';
 import CrearProducto from './Components/User/Tienda/Crear';
 import Pago from './Components/Pago';
 import UpdateProducto from './Components/User/Tienda/Update';
+import Boleta from './Components/Boleta';
+import Pedido from './Components/User/Pedido/Index'
 // import Users from './Components/User/Users.js';
 // import User from './Components/User/User.js';
 import Products from './Components/Products/Products';
@@ -95,7 +97,16 @@ useEffect(async ()=>{
   <Route exact path='/productos' render={ _ =><Redirect to={{  pathname: "/productos/page-1"}}/>}/>
   <Route exact path='/productos/page-:nro' render={ props => <Products  props={props} auth={auth} url={`http://localhost:3001/PRODUCTOS?`}  pagination={`&_start=${( 10*(props.match.params.nro-1)+1 )}&_limit=${10*(props.match.params.nro)}`} />}   />
   <Route  path='/producto/:id' render={ props => <Producto  props={props} addToCart={addToCart} cart={cart.items}  auth={auth}  deleteFavorite={deleteFavoriteProduct} addProductToFavorite={addProductToFavorite}/>}   />
- </div>   
+
+  <Route exact path='/boleta' render={ props => <Boleta {...props} />}   />
+   
+   {auth.token && auth.token.length > 0 ? 
+   ( <> 
+   <Route exact path='/user/pedidos' render={ props => <Pedido props={props} auth={auth}  />}   />
+   </>):null
+ }
+ 
+</div>   
 {/* FOOTER */}
 <Footer/> 
 

@@ -17,17 +17,17 @@ export default function CheckoutForm({datos, initStateCart}) {
 	useEffect(async () => {
 		// Create PaymentIntent as soon as the page loads
 		await crearPago(setClientSecret, setError, datos);
-
 	}, []);
 
 	useEffect(
 		async (_) => {
 			console.log(paymentIntent + ' pedido ' + clientSecret);
-			if(paymentIntent != undefined)
-			{const confirmacion = await axios
-				.post('http://localhost:3001/pedido/' + clientSecret, paymentIntent)
-				.catch((e) => setError(e));
-			console.log(confirmacion);}
+			if (paymentIntent != undefined) {
+				const confirmacion = await axios
+					.post('http://localhost:3001/pedido/' + clientSecret, paymentIntent)
+					.catch((e) => setError(e));
+				console.log(confirmacion);
+			}
 		},
 		[paymentIntent]
 	);
@@ -106,7 +106,6 @@ export default function CheckoutForm({datos, initStateCart}) {
 
 	return (
 		<form id="payment-form">
-
 			<CardElement
 				id="card-element"
 				options={cardStyle}
@@ -126,7 +125,7 @@ export default function CheckoutForm({datos, initStateCart}) {
 					)}
 				</span>
 			</button>
-		{/* {	<p className={succeeded ? 'result-message' : 'result-message hidden'}>
+			{/* {	<p className={succeeded ? 'result-message' : 'result-message hidden'}>
 				Seras Redirecionado al detalle de tu compra, Donde podras ver el # de pedido 
 				en {rediCount}.
 			</p>
@@ -148,13 +147,12 @@ export default function CheckoutForm({datos, initStateCart}) {
 				</a>{' '}
 				Seras Redirecionado al detalle de tu compra en {rediCount}
 			</p>
-
 		</form>
 	);
 }
 
-const crearPedido = async (setPedido, setError, datos, clientSecret) =>{
-	datos= { ...datos,clientSecret}
+const crearPedido = async (setPedido, setError, datos, clientSecret) => {
+	datos = {...datos, clientSecret};
 	return await axios
 		.post('http://localhost:3001/pedido/', {
 			...datos,
@@ -165,9 +163,10 @@ const crearPedido = async (setPedido, setError, datos, clientSecret) =>{
 		})
 		.catch((err) => {
 			setError(`Payment failed BDA ${err}`);
-		});}
+		});
+};
 
-const crearPago = async (setClientSecret, setError, datos) =>{
+const crearPago = async (setClientSecret, setError, datos) => {
 	return await axios
 		.post('http://localhost:3001/payment', {
 			...datos,
@@ -178,14 +177,8 @@ const crearPago = async (setClientSecret, setError, datos) =>{
 		})
 		.catch((err) => {
 			setError(`Payment failed BDA ${err}`);
-		});}
-
-
-
-
-
-
-
+		});
+};
 
 // let resp = await axios
 // 	.post('http://localhost:3001/pedido/', {

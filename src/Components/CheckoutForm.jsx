@@ -66,8 +66,7 @@ export default function CheckoutForm({datos, initStateCart}) {
 		setTimeout(
 			() =>
 				history.push({
-					pathname: '/boleta',
-					state: {pedido: pedido},
+					pathname: '/user/pedidos'
 				}),
 			5950
 		);
@@ -145,7 +144,7 @@ export default function CheckoutForm({datos, initStateCart}) {
 					{' '}
 					Stripe dashboard.
 				</a>{' '}
-				Seras Redirecionado al detalle de tu compra en {rediCount}
+				Seras Redirecionado a la seccion de pedido  en {rediCount} (debes estar logeado para ver)
 			</p>
 		</form>
 	);

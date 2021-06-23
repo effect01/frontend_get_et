@@ -1,17 +1,19 @@
 import {useParams} from 'react-router-dom';
-import {Card, CardBody} from 'reactstrap';
+import {Card, CardBody, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import ReactDOMServer from 'react-dom/server'
 
 function Product(props) {
 	const {id} = useParams();
 	const [state, setState] = useState({loading: true});
 	const [nroBuy, setNroBuy] = useState(1);
+	const [popoverOpen, setPopoverOpen] = useState(false);
 
 	useEffect(() => {
 		setState({...state, loading: true});
-		console.log(props.cart)
+		console.log(props.cart);
 		fetchProduct(setState, id);
 	}, [id]);
 
@@ -21,12 +23,17 @@ function Product(props) {
 		}
 	}, [state, id]);
 
+	const clickEvent= e =>{
+		setPopoverOpen(false);
+	}
+
 	return state.loading === true ? (
 		<p> loading </p>
 	) : state.status && state.status === 200 ? (
 		<div id="product-page">
-			<Card>
-				<div>
+			<Card onClick={(e) => clickEvent(e)}>
+				<div 
+										 >
 					<div>
 						<img src={state.data.URL_IMAGEN} alt="" />
 					</div>
@@ -38,30 +45,24 @@ function Product(props) {
 						<div>
 							<h2>{state.data.NOMBRE}</h2>
 						</div>
-			
-
-
-						 <a>
-
+						<a>
 							<h6>Vendido por:</h6>
-								<div style={{display: 'flex'}}>
-									<img src={state.data.TIENDA.URL_IMAGEN} alt="" />
-									<div>
-									<h4>{state.data.TIENDA.TITULO}</h4>
-									{' '} <span>{state.data.TIENDA.DIRECCION} </span>
-									</div>
-								
-								</div>{' '}
+							<div  			 style={{display: 'flex'}}>
+								<img src={state.data.TIENDA.URL_IMAGEN} alt="" />
 						
-						</a> *
+						{Direccion(state,setPopoverOpen,Popover , popoverOpen)}
 
+
+							</div>{' '}
+						</a>{' '}
+						*
 					</div>
-					<div id="product-interaction">
+					<div 	
+					
+
+					 id="product-interaction">
 						<div>
-							<h2>
-							CLP ${ (state.data.PRECIO_BASE * (1 - state.data.OFERTA))}
-									
-							</h2>
+							<h2>CLP ${state.data.PRECIO_BASE * (1 - state.data.OFERTA)}</h2>
 							<h5
 								style={{
 									color: 'grey',
@@ -72,9 +73,7 @@ function Product(props) {
 								{' '}
 								{state.data.OFERTA > 0 ? (
 									<>
-										<strike>
-											CLP $ { ( state.data.PRECIO_BASE)}
-										</strike>
+										<strike>CLP $ {state.data.PRECIO_BASE}</strike>
 									</>
 								) : null}
 							</h5>
@@ -141,3 +140,33 @@ const fetchProduct = (setState, id) => {
 			setState({...res.response})
 		);
 };
+
+const Direccion = (state,setPopoverOpen,Popover , popoverOpen ) =>
+(		<div id='titulo-tienda'>
+	<h4  >{state.data.TIENDA.TITULO}</h4>{' '}
+	<span>
+	<span
+		onMouseOver={(_) => setPopoverOpen(true)}
+		id="Popover-1"
+	>
+		{state.data.TIENDA.DIRECCION}
+	</span>
+
+<Popover
+		placement={'DIRECCION'}
+		isOpen={popoverOpen}
+		target={'Popover-1'}
+	
+	>
+		<PopoverHeader>Popover Title</PopoverHeader>
+		<PopoverBody>
+			Sed posuere consectetur est at lobortis. Aenean eu leo
+			quam. Pellentesque ornare sem lacinia quam venenatis
+			vestibulum.
+		</PopoverBody>
+	</Popover>
+
+
+
+</span>	</div>
+)

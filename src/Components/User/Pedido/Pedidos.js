@@ -52,17 +52,15 @@ const Pedidos = ({pedido, auth}) => {
                 display: block;
               font-size: 14px;"
 			>
-				{auth.profile.ROL_ID === 3
+				{auth.profile.ROL_ID === 2
 					? vendedorOption(
-							state,
 							asignado,
 							cancelado,
 							pedido,
 							onSelectChange,
-							cancelarPedido,
 							auth,
 							setAsignado,
-							setCancelado
+							setCancelado,
 					  )
 					: null}
 				<strong>
@@ -80,22 +78,32 @@ export default Pedidos;
 
 
 const vendedorOption = (
-	state,
 	asignado,
 	cancelado,
 	pedido,
-	onSelectChange,
-	cancelarPedido,
 	auth,
 	setAsignado,
-	setCancelado
+	setCancelado,
 ) => (
 	<div>
-	
-	
 		<button
 			onClick={() => {
-				cancelarPedido(pedido.ID, auth.token, setCancelado);
+				terminarPedido(pedido.ID_PEDIDO, auth.token, setAsignado);
+			}}
+			className="button-red"
+		>
+			Terminado{' '}</button>
+
+	<button
+			onClick={() => {
+				pedidoEnviado(pedido.ID_PEDIDO, auth.token, setAsignado);
+			}}
+			className="button-red"
+		>
+			Enviado{' '}</button>
+		<button
+			onClick={() => {
+				cancelarPedido(pedido.ID_PEDIDO, auth.token, setCancelado);
 			}}
 			className="button-red"
 			Style="background:red"
@@ -103,7 +111,7 @@ const vendedorOption = (
 			Cancelar{' '}
 		</button>
 		{cancelado == true ? <span> Pedido cancelado con exito</span> : null}
-		{asignado == true ? <span> bodeguero asignado con exito</span> : null}
+		{asignado == true ? <span>  Estado Cambiado con exito</span> : null}
 	</div>
 );
 
@@ -112,7 +120,7 @@ const vendedorOption = (
 const pedidoEnviado = (id, token, setAsignado) => {
 	var config = {
 		method: 'put',
-		url: `http://localhost:3001/pedido/bodeguero/enviado/${id}`,
+		url: `http://localhost:3001/pedido/enviado/${id}`,
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
@@ -138,7 +146,6 @@ const cancelarPedido = (id, token, setCancelado) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-
 	axios(config)
 		.then(function (response) {
 			if (response.data.rowsAffected == 1) {

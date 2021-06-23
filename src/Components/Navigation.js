@@ -168,10 +168,13 @@ const menuUser = (isOpen, toggle, signOut, auth) => (
 			</div>
 		</DropdownToggle>
 		<DropdownMenu>
+
 			<DropdownItem header>Mi Cuenta</DropdownItem>
-			<Link to="/user/tienda">
+			{auth.profile.ROL_ID === 2 ? (<Link to="/user/tienda">
 				<DropdownItem>🚚 Tienda</DropdownItem>
-			</Link>
+			</Link>):null}
+			
+
 			<Link to="/user/pedidos">
 				<DropdownItem>👜 Pedido</DropdownItem>
 			</Link>

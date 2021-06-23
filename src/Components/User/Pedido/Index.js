@@ -19,12 +19,12 @@ const Index = (props) => {
 	}, [urlFinal]);
 	useEffect(() => {
         console.log('hola')
-		if (props.auth.profile && props.auth.profile.ROL_ID === 2){
+		if (props.auth.profile && props.auth.profile.ROL_ID === 1){
 			setUrlFinal(
 				`http://localhost:3001/pedido/${props.auth.profile.CORREO}`
-			)}else if(props.auth.profile && props.auth.profile.ROL_ID === 3){
+			)}else if(props.auth.profile && props.auth.profile.ROL_ID === 2){
 
-                setUrlFinal(`http://localhost:3001/pedido/byvendedor/`)
+                setUrlFinal(`http://localhost:3001/pedido/byvendedor/${props.auth.profile.ID}`)
             }
 console.log(props.auth)
 	}, [props]);

@@ -107,9 +107,7 @@ const Boleta = (props) => {
 						TIENDA
 					</span>
 					<br />
-					<h4>
-						{state.data.TIENDA.TITULO}
-					</h4>
+					<h4>{state.data.TIENDA.TITULO}</h4>
 					<span
 						style={{
 							fontSize: '25px',
@@ -119,19 +117,16 @@ const Boleta = (props) => {
 					</span>
 
 					<div style={{display: 'block', marginTop: '2px', fontSize: '15px'}}>
-					
-						
-								<strong>
-									<span>DIRECCION: </span>
-								</strong>
-								<br />
-								<span>{state.data.DIRECCION} </span> <br />
-								<strong>
-									<span>COMUNA:</span>
-								</strong>
-								<br />
-								<span>{state.data.COMUNA_1} </span> <br />
-						
+						<strong>
+							<span>DIRECCION: </span>
+						</strong>
+						<br />
+						<span>{state.data.DIRECCION} </span> <br />
+						<strong>
+							<span>COMUNA:</span>
+						</strong>
+						<br />
+						<span>{state.data.COMUNA_1} </span> <br />
 						<strong>
 							<span>RUT DEL RECEPTOR:</span>
 						</strong>
@@ -151,7 +146,7 @@ const Boleta = (props) => {
 
     "
 				>
-					<span>Gracias por tu compra en  Verduderias Chile :)</span>
+					<span>Gracias por tu compra en Verduderias Chile :)</span>
 				</div>
 			</div>
 		</div>
